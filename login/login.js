@@ -43,6 +43,7 @@ const logar = async () =>{
     let email = document.getElementById('email')
     let senha = document.getElementById('senha')
     
+    console.log(email.value, senha.value)
     const usuario = await getLogarUsuario(email.value, senha.value)
 
 
@@ -63,6 +64,8 @@ const cadastrar = async () =>{
     let telefone = document.getElementById('criar-telefone').value
     let cpf = document.getElementById('criar-cpf').value
     let dataNascimento = document.getElementById('criar-nascimento').value
+    let cep = document.getElementById('criar-cep').value
+    let numero = document.getElementById('criar-numero').value
 
     let novoUsuario = {
         "nome": nome,
@@ -72,6 +75,8 @@ const cadastrar = async () =>{
         "icone": "https://t3.ftcdn.net/jpg/03/64/62/36/360_F_364623623_ERzQYfO4HHHyawYkJ16tREsizLyvcaeg.jpg",
         "data_nascimento": dataNascimento,
         "cpf": cpf,
+        "cep": cep,
+        "numero": numero
     }
 
     let postNovoUsuario = await postUsuario(novoUsuario)

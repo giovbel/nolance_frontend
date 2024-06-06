@@ -38,3 +38,21 @@ export async function postUsuario (usuario) {
     console.log(response.json())
     return response.ok
 }
+
+//lotes
+export const getLoteById = async (id) =>{
+
+    const url = `${baseUrl}/lote/${id}`
+    const response = await fetch(url)
+    const data = await response.json()
+
+    return data.lote
+}
+
+export const getArrematanteAtual = async (id) => {
+
+    const url = `http://localhost:8080/v1/nolance/lance/arremate/lote/`+id
+    const response = await fetch(url)
+    const data = await response.json()
+    return data.lance[0]
+}

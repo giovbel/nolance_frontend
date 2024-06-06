@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [],
+  content: ["./**/*.{html,js}"],
   theme: {
     extend: {},
   },
@@ -8,8 +8,11 @@ module.exports = {
 
   theme: {
     extend: {
+      colors:{
+        'verde_escuro': '#439641'
+      },
       fontFamily: {
-        custom: ['Poppins', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
       },
     },
   },

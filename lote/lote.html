@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lote</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link href="../tailwind/output.css" rel="stylesheet">
+</head>
+
+<body class="w-screen h-screen font-poppins overflow-x-hidden">
+    <header class=" flex flex-row h-32 bg-[#59B657] pl-8 pr-8 justify-between  items-center">
+        <div class="logo flex items-center gap-10">
+            <img class="h-10" src="../img/logo.png" alt="NoLance">
+            <h1 class="text-3xl">NOLANCE</h1>
+        </div>
+        <div class="notificacao profile flex flex-row h-[60%] items-center gap-4">
+            <img src="../img/material-symbols_circle-notifications.svg" class="h-[70%]" alt="">
+            <img class="h-12" src="../img/mingcute_user-4-fill.svg" alt="">
+        </div>
+    </header>
+    <main class="grid grid-cols-[18vw_1fr] px-64 py-32 gap-10">
+        <div class="flex flex-col">
+            <div class="flex items-center gap-6 font-semibold text-lg pb-8">
+                <img src="../img/voltar.svg" alt="">
+                <span class="text-xl">Voltar</span>
+            </div>
+            <span class="text-lg">Ver outros lotes do leilão</span>
+            <a class="w-full bg-[#EAEFE1] border border-black p-4 overflow-hidden">
+                <div class="bg-[url('../img/moeda.png')] aspect-square w-full pb-2"></div>
+                <span class="w-full text-nowrap overflow-ellipsis text-lg pt-4">Nome do leilão e etc etcaaaaa</span>
+            </a>
+        </div>
+        <div class="flex flex-col gap-12 w-full">
+            <div class="grid grid-cols-2 gap-6">
+                <div class="imagens w-full grid grid-rows-[80%_20%] h-full gap-4">
+                    <div id="img-selecionada" class="w-full h-full">
+                        <div class="bg-black w-full h-full"></div>
+                    </div>
+                    <div id="imagens" class="grid grid-cols-3 gap-4">
+                        <div class="bg-black" id="img1">aa</div>
+                        <div class="bg-black" id="img2">aa</div>
+                        <div class="bg-black" id="img3">aa</div>
+                    </div>
+                </div>
+                <div class="w-full flex flex-col h-full flex-grow">
+                    <div class="flex justify-between pb-2">
+                        <span id="status" class="bg-verde_escuro text-center py-1 px-4 text-xl">ABERTO</span>
+                        <span id="numero-lote" class="text-xl text-bold">Lote 10</span>
+                    </div>
+                    <h2 class="text-4xl pb-8">Moeda de ouro Brasil Império 20000 réis - 1851</h2>
+                    <div class="text-3xl pb-2">
+                        <span class="p-1">Termina em:</span>
+                        <div class="w-full h-12vh border-2 border-red-900 py-4 text-center" id="tempo">00:00:01</div>
+                    </div>
+                    <div id="container-lance"
+                        class="bg-[#FAFFF0] p-6 flex-grow shadow-lg grid items-center justify-center text-center gap-4 w-full">
+                        <h3 id="lance-atual" class="text-4xl">R$ 21,45</h3>
+                        <p class="text-xl" id="usuario">Fulano da Silva</p>
+                        <button class="bg-verde_escuro text-4xl py-4 px-12 w-full text-center" id="btn-lance">Dê seu lance!</button>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-[#FAFFF0] p-6 shadow-lg w-full border border-green-600 grid gap-4" id="info-leilao">
+                <h3 class="text-2xl">Moeda de ouro Brasil Império 20000 réis - 1851</h3>
+                <div>
+                    <h3 class="text-2xl">Descrição</h3>
+                    <p class="text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tempor eros
+                        non odio bibendum
+                        posuere. In scelerisque rhoncus rutrum. Aliquam quis felis et nulla consequat consectetur et
+                        vitae
+                        nibh. Quisque quis nisl vel ex placerat tincidunt nec venenatis urna. Vivamus molestie congue
+                        metus,
+                        faucibus scelerisque quam consectetur nec. In egestas et dolor porttitor bibendum.</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl">Modalidade</h3>
+                    <p class="text-xl">Online</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl">Retirada</h3>
+                    <p class="text-xl"> Local: Algum local, Alguma cidade - SP
+                        Data: 10/10/2024 - 15h</p>
+                    <p class="text-xl pt-6">Contato: Nome do comitente, 98765-4239</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-verde_escuro h-[16vh] grid content-end justify-end py-8 px-16 text-right">
+        <span class="text-3xl">NOLANCE</span>
+        <span>nolance@email.com</span>
+        <span>11 96754-7282</span>
+    </footer>
+</body>
+
+</html>

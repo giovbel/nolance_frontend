@@ -9,7 +9,7 @@ export const getUsuarioById = async (id) =>{
     const response = await fetch(url)
     const data = await response.json()
 
-    return data.usuario
+    return data.usuario[0]
 }
 
 export const getLogarUsuario = async (email, senha) =>{
@@ -55,4 +55,15 @@ export const getArrematanteAtual = async (id) => {
     const response = await fetch(url)
     const data = await response.json()
     return data.lance[0]
+}
+
+
+//leiloes
+export const getLeilaoById = async (id) =>{
+
+    const url = `${baseUrl}/leilao/${id}`
+    const response = await fetch(url)
+    const data = await response.json()
+
+    return data.leilao
 }

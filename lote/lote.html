@@ -11,6 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <link href="../tailwind/output.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/countdown@2.6.0/countdown.min.js"></script>
     <script src="./lote.js" type="module" defer></script>
 </head>
 
@@ -27,10 +28,10 @@
     </header>
     <main class="grid grid-cols-[18vw_1fr] px-64 py-32 gap-10">
         <div class="flex flex-col">
-            <div class="flex items-center gap-6 font-semibold text-lg pb-8">
+            <a class="flex items-center gap-6 font-semibold text-lg pb-8" href="../home.html">
                 <img src="../img/voltar.svg" alt="">
                 <span class="text-xl">Voltar</span>
-            </div>
+            </a>
             <span class="text-lg">Ver outros lotes do leilão</span>
             <a class="w-full bg-[#EAEFE1] border border-black p-4 overflow-hidden">
                 <div class="aspect-square w-full pb-2" id="leilao-lote-imagem"></div>
@@ -55,14 +56,29 @@
                     <h2 class="text-4xl pb-8" id="nome-lote"></h2>
                     <div class="text-3xl pb-2">
                         <span class="p-1"></span>
-                        <div class="w-full h-12vh border-2 border-red-900 py-4 text-center" id="tempo">00:00:01</div>
+                        <div class="w-full h-12vh border-2 py-4 text-center" id="tempo">00:00:01</div>
                     </div>
                     <div id="container-lance"
-                        class="bg-[#FAFFF0] p-6 flex-grow shadow-lg grid items-center justify-center text-center gap-4 w-full">
-                        <h3 id="lance-atual" class="text-4xl"></h3>
-                        <p class="text-xl" id="usuario"></p>
-                        <button class="bg-verde_escuro text-4xl py-4 px-12 w-full text-center" id="btn-lance">Dê seu lance!</button>
+                    class=" bg-[#FAFFF0] p-6 flex-grow shadow-lg grid items-center justify-center text-center gap-4 w-full">
+                    <span class=" text-4xl py-4 px-12 w-full text-center" id="lance-final">Lances finalizados</span>
+                    <h3 id="lance-atual" class="text-4xl"></h3>
+                    <p class="text-xl" id="usuario"></p>
+                    <button class="bg-verde_escuro text-4xl py-4 px-12 w-full text-center" id="btn-lance">Dê seu lance!</button>
+                </div>
+                <div id="container-lance-clicado"
+                class=" bg-[#FAFFF0] p-6 flex-grow shadow-lg  items-center justify-start w-full hidden">
+                <p class="text-xl pb-1 pt-10" id="usuario-clicado"></p>
+                <h3 id="lance-atual-clicado" class="text-4xl pb-6"></h3>
+                <div class="flex gap-6">
+                    <div class="flex border w-[12vw] border-black p-2 items-center">
+                        <span class="text-2xl">R$</span>
+                        <input type="number" name="lance" step="5" id="input-valor"
+                        class="h- w-[90%] focus:outline-none pl-1 text-2xl">
                     </div>
+                    <button class="bg-verde_escuro text-3xl py-4 px-12 text-center" id="btn-lance-confirmar">Confirmar</button>
+                </div>
+                
+            </div>
                 </div>
             </div>
             <div class="bg-[#FAFFF0] p-6 shadow-lg w-full border border-green-600 grid gap-4" id="info-lote">

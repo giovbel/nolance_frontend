@@ -1,24 +1,25 @@
 'use strict'
 
-import { getLoteById, getArrematanteAtual, getUsuarioById, getLeilaoById } from "../api/endpoints.js"
+import { getLoteById, getArrematanteAtual, getUsuarioById, getLeilaoById, postLance } from "../api/endpoints.js"
 
 const idLote = 1
 
-const btnLance = document.getElementById('btn-lance')
-
+const botaoLance = document.getElementById('btn-lance')
+const containerLance = document.getElementById('container-lance')
+const containerLanceClicado = document.getElementById('container-lance-clicado')
 
 const preencherInfoLote = async (lote) => {
 
     let leilao = await getLeilaoById(lote.leilao)
 
     const titulo = document.getElementById('nome-lote')
-    const tempo = document.getElementById('tempo')
-    const containerLance = document.getElementById('container-lance')
     const valorAtual = document.getElementById('lance-atual')
     const usuario = document.getElementById('usuario')
-    const botaoLance = document.getElementById('btn-lance')
     const infoLote = document.getElementById('info-lote')
     const imgSelecionada = document.getElementById('img-selecionada')
+    const status = document.getElementById('status')
+    status.textContent = lote.status[0].nome
+    status.classList.add(`bg-[${lote.status[0].cor.replace("\t", "")}]`)
 
     let lanceAtual = await getArrematanteAtual(lote.id)
 
@@ -81,15 +82,68 @@ const preencherInfoLote = async (lote) => {
     let leilaoDoLote = document.getElementById('leilao-lote')
     let imagemLeilao = document.getElementById('leilao-lote-imagem')
     leilaoDoLote.textContent = leilao[0].nome
-    imagemLeilao.style.backgroundImage =`url('${leilao[0].imagem}')`
+    imagemLeilao.style.backgroundImage = `url('${leilao[0].imagem}')`
+
+
+    //aparecer o 'Dar lance'
+
+    const valorAtualClicado = document.getElementById('lance-atual-clicado')
+    const usuarioClicado = document.getElementById('usuario-clicado')
+    const inputValor = document.getElementById('input-valor')
+    const botaoLanceConfirmar = document.getElementById('btn-lance-confirmar')
+    valorAtualClicado.textContent = `R$${lanceAtual.valor.toFixed(2).replace('.', ',')}`
+    usuarioClicado.textContent = `Último lance: ${usuarioAtual.nome}`
+    inputValor.value = lanceAtual.valor.toFixed(2)
+    inputValor.min = lanceAtual.valor.toFixed(2)
+
+
+    botaoLance.addEventListener('click', () =>{
+
+        containerLance.classList.add('hidden')
+        containerLanceClicado.classList.remove('hidden')
+    })
+    
+    botaoLanceConfirmar.addEventListener('click', async () =>{
+
+            const date = new Date().toLocaleDateString().split('/').reverse().join('-');
+            
+            let lanceJSON = {
+                "data_lance": date,
+                "valor": Number(inputValor.value),
+                "lote": lote.id,
+                "usuario": 1
+            }
+        
+        await postLance(lanceJSON)
+        containerLance.classList.remove('hidden')
+        containerLanceClicado.classList.add('hidden')
+    })
 
 }
 
+const lote = await getLoteById(idLote)
+preencherInfoLote(lote[0])
+const updateCountdown = async () => {
+    let leilao = await getLeilaoById(lote[0].leilao)
+    const dataAtual = new Date()
+    const dataFinal = new Date(`${leilao[0].data_final}`)
+    const tempoRestante = countdown(dataAtual, dataFinal);
+    const tempo = document.getElementById('tempo')
+    const lanceFinal = document.getElementById('lance-final')
 
+    if(dataFinal.getTime(), dataAtual.getTime()){
+        tempo.textContent = '00:00:00'
+        tempo.classList.add('text-red-500', 'border-red-500')
+        botaoLance.classList.add('hidden')
+        lanceFinal.classList.remove('hidden')
+    }else{
+        if(tempoRestante.seconds == 10)
+            tempo.classList.add('border-red-500')
+        else
+        tempo.classList.add('border-green-500')
 
+        tempo.textContent = `${tempoRestante.hours}:${tempoRestante.minutes}:${tempoRestante.seconds}`
 
-const caregarInfoLote = async () => {
-    const lote = await getLoteById(idLote)
-    preencherInfoLote(lote[0])
+    }
 }
-caregarInfoLote()
+setInterval(updateCountdown, 1000);

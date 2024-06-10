@@ -60,9 +60,9 @@
                     </div>
                     <div id="container-lance"
                     class=" bg-[#FAFFF0] p-6 flex-grow shadow-lg grid items-center justify-center text-center gap-4 w-full">
-                    <span class=" text-4xl py-4 px-12 w-full text-center" id="lance-final">Lances finalizados</span>
-                    <h3 id="lance-atual" class="text-4xl"></h3>
-                    <p class="text-xl" id="usuario"></p>
+                    <span class=" text-4xl py-4 px-12 w-full text-center hidden" id="lance-final">Lances finalizados</span>
+                    <h3 id="lance-atual" class="text-4xl">R$00,00</h3>
+                    <p class="text-xl" id="usuario">Nenhum lance realizado</p>
                     <button class="bg-verde_escuro text-4xl py-4 px-12 w-full text-center" id="btn-lance">Dê seu lance!</button>
                 </div>
                 <div id="container-lance-clicado"
@@ -72,7 +72,7 @@
                 <div class="flex gap-6">
                     <div class="flex border w-[12vw] border-black p-2 items-center">
                         <span class="text-2xl">R$</span>
-                        <input type="number" name="lance" step="5" id="input-valor"
+                        <input type="number" name="lance" value="00.00" step="5" id="input-valor"
                         class="h- w-[90%] focus:outline-none pl-1 text-2xl">
                     </div>
                     <button class="bg-verde_escuro text-3xl py-4 px-12 text-center" id="btn-lance-confirmar">Confirmar</button>

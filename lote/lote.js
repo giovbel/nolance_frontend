@@ -2,7 +2,7 @@
 
 import { getLoteById, getArrematanteAtual, getUsuarioById, getLeilaoById, postLance } from "../api/endpoints.js"
 
-const idLote = 1
+const idLote = 11
 
 const botaoLance = document.getElementById('btn-lance')
 const containerLance = document.getElementById('container-lance')
@@ -22,12 +22,27 @@ const preencherInfoLote = async (lote) => {
     status.classList.add(`bg-[${lote.status[0].cor.replace("\t", "")}]`)
 
     let lanceAtual = await getArrematanteAtual(lote.id)
+    const valorAtualClicado = document.getElementById('lance-atual-clicado')
+    const usuarioClicado = document.getElementById('usuario-clicado')
+    const inputValor = document.getElementById('input-valor')
+    const botaoLanceConfirmar = document.getElementById('btn-lance-confirmar')
+
+    if(lanceAtual){
+        let usuarioAtual = await getUsuarioById(lanceAtual.usuario_id)
+        usuario.textContent = usuarioAtual.nome
+        valorAtualClicado.textContent = `R$${lanceAtual.valor.toFixed(2).replace('.', ',')}`
+        usuarioClicado.textContent = `Último lance: ${usuarioAtual.nome}`
+        inputValor.value = lanceAtual.valor.toFixed(2) + 1
+
+        valorAtual.textContent = `R$${lanceAtual.valor.toFixed(2).replace('.', ',')}`
+    }else{
+        valorAtual.textContent =`R$00,00`
+    }
 
     titulo.textContent = lote.nome
-    valorAtual.textContent = `R$${lanceAtual.valor.toFixed(2).replace('.', ',')}`
+    
 
-    let usuarioAtual = await getUsuarioById(lanceAtual.usuario_id)
-    usuario.textContent = usuarioAtual.nome
+
 
     //criar a descrição do lote
 
@@ -77,6 +92,7 @@ const preencherInfoLote = async (lote) => {
         }
         )
     }
+    if(lote.imagens.length > 0)
     imgSelecionada.style.backgroundImage = `url('${lote.imagens[0].url}')`
 
     let leilaoDoLote = document.getElementById('leilao-lote')
@@ -86,15 +102,6 @@ const preencherInfoLote = async (lote) => {
 
 
     //aparecer o 'Dar lance'
-
-    const valorAtualClicado = document.getElementById('lance-atual-clicado')
-    const usuarioClicado = document.getElementById('usuario-clicado')
-    const inputValor = document.getElementById('input-valor')
-    const botaoLanceConfirmar = document.getElementById('btn-lance-confirmar')
-    valorAtualClicado.textContent = `R$${lanceAtual.valor.toFixed(2).replace('.', ',')}`
-    usuarioClicado.textContent = `Último lance: ${usuarioAtual.nome}`
-    inputValor.value = lanceAtual.valor.toFixed(2)
-    inputValor.min = lanceAtual.valor.toFixed(2)
 
 
     botaoLance.addEventListener('click', () =>{
@@ -131,7 +138,7 @@ const updateCountdown = async () => {
     const tempo = document.getElementById('tempo')
     const lanceFinal = document.getElementById('lance-final')
 
-    if(dataFinal.getTime(), dataAtual.getTime()){
+    if(dataFinal.getTime() < dataAtual.getTime()){
         tempo.textContent = '00:00:00'
         tempo.classList.add('text-red-500', 'border-red-500')
         botaoLance.classList.add('hidden')
@@ -141,7 +148,7 @@ const updateCountdown = async () => {
             tempo.classList.add('border-red-500')
         else
         tempo.classList.add('border-green-500')
-
+        
         tempo.textContent = `${tempoRestante.hours}:${tempoRestante.minutes}:${tempoRestante.seconds}`
 
     }

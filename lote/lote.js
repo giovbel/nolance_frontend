@@ -1,12 +1,25 @@
 'use strict'
 
 import { getLoteById, getArrematanteAtual, getUsuarioById, getLeilaoById, postLance } from "../api/endpoints.js"
+import {  } from "../node_modules/socket.io/client-dist/socket.io.js"
+import {  } from "../node_modules/socket.io/client-dist/socket.io.js"
 
 const idLote = 11
 
 const botaoLance = document.getElementById('btn-lance')
 const containerLance = document.getElementById('container-lance')
 const containerLanceClicado = document.getElementById('container-lance-clicado')
+
+const socket = io('http://localhost:8080')
+
+
+socket.on('connect', () => {
+    console.log('conectado')
+}
+);
+socket.on('new-lance', (comment) => {
+    preencherInfoLote(lote[0])
+});
 
 const preencherInfoLote = async (lote) => {
 
@@ -124,6 +137,16 @@ const preencherInfoLote = async (lote) => {
         await postLance(lanceJSON)
         containerLance.classList.remove('hidden')
         containerLanceClicado.classList.add('hidden')
+
+        socket.emit('enviar-lance', lanceJSON)
+
+
+
+        // socket.on('new-lance', (lance) => {
+        //     console.log(lance)
+        //     // 
+        // });
+        
     })
 
 }

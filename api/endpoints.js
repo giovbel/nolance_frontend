@@ -4,10 +4,15 @@
 const baseUrl = 'https://nolance-backend.onrender.com/v1/nolance'
 // usuários
 
+const optionsGet = {
+    mode: 'no-cors'
+}
+
 export const getUsuarioById = async (id) => {
 
     const url = `${baseUrl}/user/${id}`
-    const response = await fetch(url)
+    
+    const response = await fetch(url, optionsGet)
     const data = await response.json()
 
     return data.usuario[0]
@@ -17,8 +22,7 @@ export const getLogarUsuario = async (email, senha) => {
 
 
     const url = `${baseUrl}/user?email=${email}&senha=${senha}`
-    console.log(url)
-    const response = await fetch(url)
+    const response = await fetch(url, optionsGet)
     const data = await response.json()
 
     return data.usuario
@@ -29,14 +33,13 @@ export async function postUsuario(usuario) {
     const options = {
         method: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(usuario)
     }
 
     const response = await fetch(url, options)
 
-    console.log(response.json())
     return response.ok
 }
 
@@ -44,7 +47,7 @@ export async function postUsuario(usuario) {
 export const getLoteById = async (id) => {
 
     const url = `${baseUrl}/lote/${id}`
-    const response = await fetch(url)
+    const response = await fetch(url,optionsGet);
     const data = await response.json()
 
     return data.lote
@@ -52,8 +55,8 @@ export const getLoteById = async (id) => {
 
 export const getArrematanteAtual = async (id) => {
 
-    const url = `http://localhost:8080/v1/nolance/lance/arremate/lote/` + id
-    const response = await fetch(url)
+    const url = `${baseUrl}/lance/arremate/lote/` + id
+    const response = await fetch(url, optionsGet)
     const data = await response.json()
 
     if (data.status_code == 404) {
@@ -61,11 +64,10 @@ export const getArrematanteAtual = async (id) => {
     } else {
         return data.lance[0]
     }
-
 }
 
 export async function postLance(lance) {
-    const url = 'http://localhost:8080/v1/nolance/lance'
+    const url = `${baseUrl}/lance`
     const options = {
         method: "POST",
         headers: {
@@ -74,20 +76,41 @@ export async function postLance(lance) {
         body: JSON.stringify(lance)
     }
     const response = await fetch(url, options)
-    console.log(response.json())
+
     return response.ok
 }
 
+export const getArrematesUsuario = async (id) => {
+
+    const url = `${baseUrl}/arremate/usuario/` + id
+    const response = await fetch(url, optionsGet)
+    const data = await response.json()
+
+    if (data.status_code == 404) {
+        return false
+    } else {
+        return data.lances
+    }
+}
 
 
 //leiloes
 export const getLeilaoById = async (id) => {
 
     const url = `${baseUrl}/leilao/${id}`
-    const response = await fetch(url)
+    const response = await fetch(url, optionsGet)
     const data = await response.json()
 
     return data.leilao
 }
 
+//categorias
+export const getCategorias = async () => {
 
+
+    const url = `${baseUrl}/categorias`
+    const response = await fetch(url, optionsGet)
+    const data = await response.json()
+       
+    return data.categorias
+}

@@ -22,7 +22,11 @@ export const getLogarUsuario = async (email, senha) => {
 
 
     const url = `${baseUrl}/user?email=${email}&senha=${senha}`
+<<<<<<< main
+    const response = await fetch(url)
+=======
     const response = await fetch(url, optionsGet)
+>>>>>>> main
     const data = await response.json()
 
     return data.usuario
@@ -43,6 +47,16 @@ export async function postUsuario(usuario) {
     return response.ok
 }
 
+//interesses
+
+export const getInteressesByUser = async (id) => {
+    const url = `${baseUrl}/interessesUsuario/${id}`
+    const response = await fetch(url)
+    const data = await response.json()
+
+    return data.interesses
+}
+
 //lotes
 export const getLoteById = async (id) => {
 
@@ -56,7 +70,11 @@ export const getLoteById = async (id) => {
 export const getArrematanteAtual = async (id) => {
 
     const url = `${baseUrl}/lance/arremate/lote/` + id
+<<<<<<< main
+    const response = await fetch(url)
+=======
     const response = await fetch(url, optionsGet)
+>>>>>>> main
     const data = await response.json()
 
     if (data.status_code == 404) {
@@ -106,6 +124,28 @@ export const getLeilaoById = async (id) => {
 
 //categorias
 export const getCategorias = async () => {
+<<<<<<< main
+
+
+    const url = `${baseUrl}/categorias`
+    const response = await fetch(url)
+    const data = await response.json()
+       
+    return data.categorias
+}
+
+export const updateCategoria = async (id, categoria) => {
+    const url = `${baseUrl}/categoria/${id}`
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(categoria)
+    })
+
+    return response.ok
+=======
 
 
     const url = `${baseUrl}/categorias`
@@ -113,4 +153,5 @@ export const getCategorias = async () => {
     const data = await response.json()
        
     return data.categorias
+>>>>>>> main
 }

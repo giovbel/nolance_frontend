@@ -89,6 +89,6 @@ const cadastrar = async () =>{
 
 }
 
-btnSignUp.addEventListener('click', cadastrar)
-btnLogin.addEventListener('click', logar)
+btnSignUp.addEventListener('click', cadastrar())
+btnLogin.addEventListener('click', logar())
 

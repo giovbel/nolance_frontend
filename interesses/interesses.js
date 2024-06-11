@@ -67,7 +67,11 @@ divFinal.addEventListener('click',  () =>{
         alert('Selecione pelo menos 2 interesses')
     else{
         localStorage.setItem('interesses', JSON.stringify(interesses))
+<<<<<<< HEAD
+        window.location.href = '../home/home.html';
+=======
         window.location.href = '../home.html';
+>>>>>>> 76f54e99b9681c47c47c5e3096147628346f2d53
     }
     
 })

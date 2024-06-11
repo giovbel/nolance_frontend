@@ -2,6 +2,8 @@
 
 import { getLogarUsuario, postUsuario } from "../api/endpoints.js"
 
+localStorage.setItem('idUsuario', 0)
+
 //tela de login e cadastro
 const btnMudarSignUp = document.getElementById('botao-signup')
 const btnMudarLogin = document.getElementById('botao-login')
@@ -83,8 +85,8 @@ const cadastrar = async () =>{
     let postNovoUsuario = await postUsuario(novoUsuario)
     console.log(postNovoUsuario)
     if(postNovoUsuario){
-        alert('conta criada com sucesso')
-        window.location.assign('../interesses/interesses.html')
+        alert('conta criada com sucesso'+ postNovoUsuario.usuario[0].id)
+        localStorage.setItem('idUsuario', postNovoUsuario.usuario[0].id)
     }
 
 }

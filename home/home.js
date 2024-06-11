@@ -3,12 +3,19 @@
 import { getLeiloes } from "../api/endpoints.js";
 import { getListarLotes } from "../api/endpoints.js";
 
+const botoes = document.getElementById('sign-buttons')
+const botoesUsuario = document.getElementById('user-buttons')
+if(localStorage.getItem('idUsuario')!= 0){
+        console.log(localStorage.getItem('idUsuario'))
+        botoes.classList.add('hidden')
+        botoesUsuario.classList.remove('hidden')
+}
+
 async function carregarLeiloes() {
         const leiloes = await getLeiloes()
         const div = document.getElementById('div')
-        leiloes.forEach(leilao => {
-                let card = criarCardLeilao(leilao)
-                console.log(card)
+        leiloes.forEach(async leilao => {
+                let card = await criarCardLeilao(leilao)
                 div.appendChild(card)
         });
 }
@@ -53,23 +60,28 @@ const criarCardLeilao = async (leilao) => {
         separator.textContent = '|';
         secondSectionInnerDiv.appendChild(separator);
 
-        const date = document.createElement('span');
-        date.classList.add('text-xs', 'text-[#766F6F]');
-        date.textContent = leilao.data_inicio.split('T')[0].split('-').reverse().join('/')
-        secondSectionInnerDiv.appendChild(date);
+        const data = document.createElement('span');
+        data.classList.add('text-xs', 'text-[#766F6F]');
+        data.textContent = leilao.data_inicio.split('T')[0].split('-').reverse().join('/')
+        secondSectionInnerDiv.appendChild(data);
 
 
 
-        const categories = document.createElement('p');
-        categories.classList.add('text-xs', 'text-[#766F6F]');
-        categories.textContent = leilao.categoria[0].nome;
-        infoLeilao.appendChild(categories);
+        const categorias = document.createElement('p');
+        categorias.classList.add('text-xs', 'text-[#766F6F]');
+        categorias.textContent = leilao.categoria[0].nome;
+        infoLeilao.appendChild(categorias);
 
         const greenBar = document.createElement('div');
         greenBar.classList.add('h-5', 'w-52', 'bg-[#328336]', 'rounded-md', 'border', 'border-black');
         containerInfo.replaceChildren(containerTitulo, secondSectionInnerDiv, infoLeilao, greenBar);
 
         container.replaceChildren(imagem, containerInfo);
+
+        container.addEventListener('click', () =>{
+                localStorage.setItem('idLeilao', leilao.id)
+                window.location.assign('../leilao/lotesDoLeilao.html')
+        })
 
         return container
 }
@@ -96,7 +108,7 @@ const criarCardLote = (lote) => {
         h1.textContent = lote.id;
 
         const imagem = document.createElement('div');
-        imagem.src = lote.imagem;
+        imagem.src = '../img/not_found.png';
         imagem.classList.add('h-[12vh]', 'w-[11vw]', 'bg-cover', 'bg-center');
 
 
@@ -106,37 +118,36 @@ const criarCardLote = (lote) => {
 
         const infoContainer = document.createElement('div');
 
-        const dateInfo = document.createElement('div');
-        dateInfo.classList.add('flex', 'gap-1', 'items-center');
-        const dateImg = document.createElement('img');
-        dateImg.classList.add('h-5');
-        dateImg.src = "../img/lets-icons_date-fill.png";
-        dateImg.alt = "";
-        const dateP = document.createElement('p');
-        dateP.textContent = lote.data_inicio.split('T')[0].split('-').reverse().join('/');
-        dateInfo.appendChild(dateImg);
-        dateInfo.appendChild(dateP);
+        const dataInfo = document.createElement('div');
+        dataInfo.classList.add('flex', 'gap-1', 'items-center');
+        const dataImg = document.createElement('img');
+        dataImg.classList.add('h-5');
+        dataImg.src = "../img/lets-icons_date-fill.png";
+        dataImg.alt = "";
+        const dataP = document.createElement('p');
+        dataP.textContent = lote.data_inicio.split('T')[0].split('-').reverse().join('/');
+        dataInfo.appendChild(dataImg);
+        dataInfo.appendChild(dataP);
 
-        const timeInfo = document.createElement('div');
-        timeInfo.classList.add('flex', 'gap-1', 'items-center');
-        const timeImg = document.createElement('img');
-        timeImg.classList.add('h-5');
-        timeImg.src = "../img/ri_time-fill.png";
+        const horarioInfo = document.createElement('div');
+        horarioInfo.classList.add('flex', 'gap-1', 'items-center');
+        const horarioImg = document.createElement('img');
+        horarioImg.classList.add('h-5');
+        horarioImg.src = "../img/ri_time-fill.png";
 
-        const timeP = document.createElement('p');
-        timeP.textContent = "09:00h";
-        timeInfo.appendChild(timeImg);
-        timeInfo.appendChild(timeP);
+        const horarioP = document.createElement('p');
+        horarioP.textContent = "09:00h";
+        horarioInfo.appendChild(horarioImg);
+        horarioInfo.appendChild(horarioP);
 
         const statusContainer = document.createElement('div');
-        statusContainer.classList.add('h-9', 'w-[11vw]', 'rounded-sm', 'flex', 'items-center', 'justify-center', 'bg-[#328336]');
+        statusContainer.classList.add('h-9', 'w-[11vw]', 'rounded-sm', 'flex', 'items-center', 'justify-center', `bg-[${lote.status[0].cor.replace(' ', '')}]`);
         const statusH1 = document.createElement('h1');
         statusH1.classList.add('text-white');
         statusH1.textContent = lote.status[0].nome;
         statusContainer.appendChild(statusH1);
 
-        infoContainer.appendChild(dateInfo);
-        infoContainer.appendChild(timeInfo);
+        infoContainer.replaceChildren(dataInfo, horarioInfo);
 
         container.appendChild(h1);
         container.appendChild(imagem);
@@ -146,7 +157,10 @@ const criarCardLote = (lote) => {
 
         const div = document.getElementById('interesses')
         div.appendChild(container)
-
+        div.addEventListener('click', () =>{
+                localStorage.setItem('idLote', lote.id)
+                window.location.assign('../lote/lote.html')
+        })
 
 };
 
@@ -158,8 +172,8 @@ async function carregarLeiloesAcabando() {
 
         const leiloes = await getLeiloes()
         const acabando = document.getElementById('acabando')
-        leiloes.forEach(leilao => {
-                let card = criarCardLeilao(leilao)
+        leiloes.forEach(async leilao => {
+                let card = await criarCardLeilao(leilao)
 
                 acabando.appendChild(card)
         });

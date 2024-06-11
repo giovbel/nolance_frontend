@@ -4,20 +4,21 @@ import { getLoteById, getArrematanteAtual, getUsuarioById, getLeilaoById, postLa
 import {  } from "../node_modules/socket.io/client-dist/socket.io.js"
 import {  } from "../node_modules/socket.io/client-dist/socket.io.js"
 
-const idLote = 11
+const idLote = localStorage.getItem('idLote')
 
 const botaoLance = document.getElementById('btn-lance')
 const containerLance = document.getElementById('container-lance')
 const containerLanceClicado = document.getElementById('container-lance-clicado')
 
 const socket = io('http://localhost:8080')
-
+// const socket = io('https://nolance-backend.onrender.com/v1/nolance')
 
 socket.on('connect', () => {
     console.log('conectado')
 }
 );
-socket.on('new-lance', (comment) => {
+socket.on('new-lance', (lance) => {
+    console.log(lance)
     preencherInfoLote(lote[0])
 });
 
@@ -32,14 +33,15 @@ const preencherInfoLote = async (lote) => {
     const imgSelecionada = document.getElementById('img-selecionada')
     const status = document.getElementById('status')
     status.textContent = lote.status[0].nome
-    status.classList.add(`bg-[${lote.status[0].cor.replace("\t", "")}]`)
+    
+    status.classList.add(`bg-[${lote.status[0].cor.replace(" ", "")}]`)
 
     let lanceAtual = await getArrematanteAtual(lote.id)
     const valorAtualClicado = document.getElementById('lance-atual-clicado')
     const usuarioClicado = document.getElementById('usuario-clicado')
     const inputValor = document.getElementById('input-valor')
     const botaoLanceConfirmar = document.getElementById('btn-lance-confirmar')
-
+    
     if(lanceAtual){
         let usuarioAtual = await getUsuarioById(lanceAtual.usuario_id)
         usuario.textContent = usuarioAtual.nome
@@ -78,7 +80,7 @@ const preencherInfoLote = async (lote) => {
     modalidadeTitulo.textContent = 'Modalidade';
     const modalidadeTexto = document.createElement('p');
     modalidadeTexto.classList.add('text-xl');
-    modalidadeTexto.textContent = leilao[0].modalidade_id[0].nome;
+    modalidadeTexto.textContent = leilao.modalidade_id[0].nome;
     modalidadeDiv.replaceChildren(modalidadeTitulo, modalidadeTexto);
 
     const retiradaDiv = document.createElement('div');
@@ -87,10 +89,10 @@ const preencherInfoLote = async (lote) => {
     retiradaTitulo.textContent = 'Retirada';
     const retiradaTexto = document.createElement('p');
     retiradaTexto.classList.add('text-xl');
-    retiradaTexto.innerHTML = leilao[0].retirada;
+    retiradaTexto.innerHTML = leilao.retirada;
     const contato = document.createElement('p');
     contato.classList.add('text-xl', 'pt-6');
-    contato.textContent = `Contato: ${leilao[0].comitente_id[0].nome}, ${leilao[0].comitente_id[0].telefone}`;
+    contato.textContent = `Contato: ${leilao.comitente_id[0].nome}, ${leilao.comitente_id[0].telefone}`;
     retiradaDiv.replaceChildren(retiradaTitulo, retiradaTexto, contato);
 
     infoLote.replaceChildren(infoTitulo, descricaoDiv, modalidadeDiv, retiradaDiv);
@@ -110,8 +112,8 @@ const preencherInfoLote = async (lote) => {
 
     let leilaoDoLote = document.getElementById('leilao-lote')
     let imagemLeilao = document.getElementById('leilao-lote-imagem')
-    leilaoDoLote.textContent = leilao[0].nome
-    imagemLeilao.style.backgroundImage = `url('${leilao[0].imagem}')`
+    leilaoDoLote.textContent = leilao.nome
+    imagemLeilao.style.backgroundImage = `url('${leilao.imagem}')`
 
 
     //aparecer o 'Dar lance'
@@ -134,11 +136,12 @@ const preencherInfoLote = async (lote) => {
                 "usuario": 1
             }
         
+            
+        socket.emit('enviar-lance', lanceJSON)
         await postLance(lanceJSON)
         containerLance.classList.remove('hidden')
         containerLanceClicado.classList.add('hidden')
 
-        socket.emit('enviar-lance', lanceJSON)
 
 
 
@@ -156,10 +159,11 @@ preencherInfoLote(lote[0])
 const updateCountdown = async () => {
     let leilao = await getLeilaoById(lote[0].leilao)
     const dataAtual = new Date()
-    const dataFinal = new Date(`${leilao[0].data_final}`)
+    const dataFinal = new Date(`${leilao.data_final}`)
     const tempoRestante = countdown(dataAtual, dataFinal);
     const tempo = document.getElementById('tempo')
     const lanceFinal = document.getElementById('lance-final')
+
 
     if(dataFinal.getTime() < dataAtual.getTime()){
         tempo.textContent = '00:00:00'
@@ -177,3 +181,7 @@ const updateCountdown = async () => {
     }
 }
 setInterval(updateCountdown, 1000);
+
+function saveLeilaoId(){
+    localStorage.setItem('idLeilao', lote[0].leilao)
+}

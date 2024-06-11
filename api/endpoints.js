@@ -17,7 +17,6 @@ export const getLogarUsuario = async (email, senha) => {
 
 
     const url = `${baseUrl}/user?email=${email}&senha=${senha}`
-    console.log(url)
     const response = await fetch(url)
     const data = await response.json()
 
@@ -36,8 +35,17 @@ export async function postUsuario(usuario) {
 
     const response = await fetch(url, options)
 
-    console.log(response.json())
     return response.ok
+}
+
+//interesses
+
+export const getInteressesByUser = async (id) => {
+    const url = `${baseUrl}/interessesUsuario/${id}`
+    const response = await fetch(url)
+    const data = await response.json()
+
+    return data.interesses
 }
 
 //lotes
@@ -52,7 +60,7 @@ export const getLoteById = async (id) => {
 
 export const getArrematanteAtual = async (id) => {
 
-    const url = `http://localhost:8080/v1/nolance/lance/arremate/lote/` + id
+    const url = `${baseUrl}/lance/arremate/lote/` + id
     const response = await fetch(url)
     const data = await response.json()
 
@@ -65,7 +73,7 @@ export const getArrematanteAtual = async (id) => {
 }
 
 export async function postLance(lance) {
-    const url = 'http://localhost:8080/v1/nolance/lance'
+    const url = `${baseUrl}/lance`
     const options = {
         method: "POST",
         headers: {
@@ -74,7 +82,7 @@ export async function postLance(lance) {
         body: JSON.stringify(lance)
     }
     const response = await fetch(url, options)
-    console.log(response.json())
+
     return response.ok
 }
 
@@ -90,4 +98,26 @@ export const getLeilaoById = async (id) => {
     return data.leilao
 }
 
+//categorias
+export const getCategorias = async () => {
 
+
+    const url = `${baseUrl}/categorias`
+    const response = await fetch(url)
+    const data = await response.json()
+       
+    return data.categorias
+}
+
+export const updateCategoria = async (id, categoria) => {
+    const url = `${baseUrl}/categoria/${id}`
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(categoria)
+    })
+
+    return response.ok
+}

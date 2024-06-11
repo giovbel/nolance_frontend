@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./conta.js" type="module"></script>
+</head>
+
+<body class="flex">
+
+    <div class="w-[5vw] h-screen bg-[#59B657] grid p-10 gap-10 transition-all fixed hover:w-[20vw] overflow-hidden">
+       <a href="../home/home.html"> <img src="../img/logo.png" alt=""></a>
+
+        <div class="grid gap-2 pb-40 text-2xl">
+            <a href="" class="flex gap-12 items-center"><img class="size-[40px]" src="../img/automoveis.png" alt="">
+                <span>Automóveis</span></a>
+            <a href="" class="flex gap-12 items-center"><img class="size-[40px]" src="../img/antiguidades.png" alt="">
+                <span>Antiguidades</span></a>
+            <a href="" class="flex gap-12 items-center"><img class="size-[40px]" src="../img/imoveis.png" alt="">
+                <span>Imóveis</span></a>
+            <a href="" class="flex gap-12 items-center"><img class="size-[40px]" src="../img/livros.png" alt="">
+                <span>Livros</span></a>
+            <a href="" class="flex gap-12 items-center"><img class="size-[40px]" src="../img/roupas.png" alt="">
+                <span>Roupas</span></a>
+            <a href="" class="flex gap-12 items-center"><img class="size-[40px]" src="../img/industrial.png" alt="">
+                <span>Industrial</span></a>
+            <a href="" class="flex gap-12 items-center"><img class="size-[40px]" src="../img/colecionavel.png" alt="">
+                <span>Colecionáveis</span></a>
+            <a href="" class="flex gap-12 items-center"><img class="size-[40px]" src="../img/ferramenta.png" alt="">
+                <span>Ferramentas</span></a>
+        </div>
+
+        <div class="text-xl"> <a href="" class="flex gap-12 items-center"><span>Início</span></a>
+            <a href="" class="flex gap-12 items-center"><span>Agenda</span></a>
+        </div>
+
+
+
+    </div>
+
+
+    <div class="w-full pr-20 h-full grid grid-rows-[2.5rem_1fr] gap-[70px] pl-[9vw]">
+        <div class="h-20 flex justify-between items-center pt-[5vh] w-full">
+            <h1 class="font-poppins text-2xl">NOLANCE</h1>
+
+            <div class="flex gap-5 font-poppins">
+                <div class="notificacao profile flex flex-row h-[60%] items-center gap-4">
+                    <img class="h-9" src="../img/material-symbols_circle-notifications.svg" class="h-[70%]" alt="">
+                    <img class="h-12" src="../img/mingcute_user-4-fill.svg" alt="">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="grid gap-5 pt-6">
+            <h1 class="text-2xl">Minha conta</h1>
+
+            <div class="h-52 w-[27vw] border border-black flex items-center gap-6 justify-center rounded-md">
+
+                <div class="grid ">
+                    <h1 class="text-lg">Nome</h1>
+                    <h1 class="text-xl" id="nome"></h1>
+
+                    <h1 class="text-lg">Email</h1>
+                    <h1 class="text-xl" id="email"></h1>
+                </div>
+
+                <div>
+                    <h1 class="text-lg">Telefone</h1>
+                    <h1 class="text-xl" id="telefone"></h1>
+
+                    <h1 class="text-lg">Endereço</h1>
+                    <h1 class="text-xl" id="endereco"></h1>
+                </div>
+
+            </div>
+            <h1 class="text-2xl">Atividade recente</h1>
+
+            <div class="flex gap-3">
+                <div class="h-40 w-[14vw] border border-black  pt-3 pb-5 rounded-md pl-5 ">
+
+                    <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 bg-black bg-cover bg-center bg-[url('../img/principal.png')]"></div>
+                        <h1 class="text-xl">22/10/23</h1>
+                    </div>
+
+                    <div class="pt-2">
+                        <h1 class="text-lg">Moeda de Ouro do Brasil</h1>
+                        <h1 class="text-lg">Arrematante por </h1>
+                        <h1 class="text-lg">R$2000,00</h1>
+                    </div>
+
+                </div>
+
+
+                <div class="h-40 w-[14vw] border border-black  pt-3 pb-5 rounded-md pl-5" id="historico">
+
+                    <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 bg-black bg-cover bg-center bg-[url('../img/principal.png')]"></div>
+                        <h1 class="text-xl">22/10/23</h1>
+                    </div>
+
+                    <div class="pt-2">
+                        <h1 class="text-lg">Moeda de Ouro do Brasil</h1>
+                        <h1 class="text-lg">Arrematante por </h1>
+                        <h1 class="text-lg">R$2000,00</h1>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

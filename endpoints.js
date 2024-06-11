@@ -1,7 +1,7 @@
 'use strict'
 
-const baseUrl = 'http://localhost:8080/v1/nolance'
-// const baseUrl = 'https://nolance-backend.onrender.com/v1/nolance'
+// const baseUrl = 'http://localhost:8080/v1/nolance'
+const baseUrl = 'https://nolance-backend.onrender.com/v1/nolance'
 // usuários
 
 export const getUsuarioById = async (id) => {
@@ -50,7 +50,7 @@ export const getLoteById = async (id) => {
 
 export const getArrematanteAtual = async (id) => {
 
-    const url = `http://localhost:8080/v1/nolance/lance/arremate/lote/` + id
+    const url = `${baseUrl}/lance/arremate/lote/` + id
     const response = await fetch(url)
     const data = await response.json()
 
@@ -63,7 +63,7 @@ export const getArrematanteAtual = async (id) => {
 }
 
 export async function postLance(lance) {
-    const url = 'http://localhost:8080/v1/nolance/lance'
+    const url = `${baseUrl}/lance`
     const options = {
         method: "POST",
         headers: {

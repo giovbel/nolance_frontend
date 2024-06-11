@@ -1,7 +1,7 @@
 'use strict'
 
 // const baseUrl = 'http://localhost:8080/v1/nolance'
-const baseUrl = 'https://nolance-backend.onrender.com'
+const baseUrl = 'https://nolance-backend.onrender.com/v1/nolance'
 // usuários
 
 export const getUsuarioById = async (id) => {

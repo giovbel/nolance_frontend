@@ -4,10 +4,15 @@
 const baseUrl = 'https://nolance-backend.onrender.com/v1/nolance'
 // usuários
 
+const optionsGet = {
+    mode: 'no-cors'
+}
+
 export const getUsuarioById = async (id) => {
 
     const url = `${baseUrl}/user/${id}`
-    const response = await fetch(url)
+    
+    const response = await fetch(url, optionsGet)
     const data = await response.json()
 
     return data.usuario[0]
@@ -17,7 +22,11 @@ export const getLogarUsuario = async (email, senha) => {
 
 
     const url = `${baseUrl}/user?email=${email}&senha=${senha}`
+<<<<<<< main
     const response = await fetch(url)
+=======
+    const response = await fetch(url, optionsGet)
+>>>>>>> main
     const data = await response.json()
 
     return data.usuario
@@ -28,7 +37,7 @@ export async function postUsuario(usuario) {
     const options = {
         method: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(usuario)
     }
@@ -52,7 +61,7 @@ export const getInteressesByUser = async (id) => {
 export const getLoteById = async (id) => {
 
     const url = `${baseUrl}/lote/${id}`
-    const response = await fetch(url)
+    const response = await fetch(url,optionsGet);
     const data = await response.json()
 
     return data.lote
@@ -61,7 +70,11 @@ export const getLoteById = async (id) => {
 export const getArrematanteAtual = async (id) => {
 
     const url = `${baseUrl}/lance/arremate/lote/` + id
+<<<<<<< main
     const response = await fetch(url)
+=======
+    const response = await fetch(url, optionsGet)
+>>>>>>> main
     const data = await response.json()
 
     if (data.status_code == 404) {
@@ -69,7 +82,6 @@ export const getArrematanteAtual = async (id) => {
     } else {
         return data.lance[0]
     }
-
 }
 
 export async function postLance(lance) {
@@ -86,13 +98,25 @@ export async function postLance(lance) {
     return response.ok
 }
 
+export const getArrematesUsuario = async (id) => {
+
+    const url = `${baseUrl}/arremate/usuario/` + id
+    const response = await fetch(url, optionsGet)
+    const data = await response.json()
+
+    if (data.status_code == 404) {
+        return false
+    } else {
+        return data.lances
+    }
+}
 
 
 //leiloes
 export const getLeilaoById = async (id) => {
 
     const url = `${baseUrl}/leilao/${id}`
-    const response = await fetch(url)
+    const response = await fetch(url, optionsGet)
     const data = await response.json()
 
     return data.leilao
@@ -100,6 +124,7 @@ export const getLeilaoById = async (id) => {
 
 //categorias
 export const getCategorias = async () => {
+<<<<<<< main
 
 
     const url = `${baseUrl}/categorias`
@@ -120,4 +145,13 @@ export const updateCategoria = async (id, categoria) => {
     })
 
     return response.ok
+=======
+
+
+    const url = `${baseUrl}/categorias`
+    const response = await fetch(url, optionsGet)
+    const data = await response.json()
+       
+    return data.categorias
+>>>>>>> main
 }

@@ -1,6 +1,6 @@
 'use strict'
 
-import { getLogarUsuario, postUsuario } from "../../api/endpoints.js"
+import { getLogarUsuario, postUsuario } from "../api/endpoints.js"
 
 //tela de login e cadastro
 const btnMudarSignUp = document.getElementById('botao-signup')
@@ -43,12 +43,13 @@ const logar = async () =>{
     let email = document.getElementById('email')
     let senha = document.getElementById('senha')
     
-    console.log(email.value, senha.value)
     const usuario = await getLogarUsuario(email.value, senha.value)
 
 
     if(usuario){
-        window.location.assign('../home.html')
+        localStorage.setItem('idUsuario', usuario[0].id)
+        window.location.assign('../home/home.html')
+        
     }else{
         alert('usuário ou senha incorretos')
     }
@@ -83,7 +84,7 @@ const cadastrar = async () =>{
     console.log(postNovoUsuario)
     if(postNovoUsuario){
         alert('conta criada com sucesso')
-        window.location.reload()
+        window.location.assign('../interesses/interesses.html')
     }
 
 }

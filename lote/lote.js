@@ -4,14 +4,13 @@ import { getLoteById, getArrematanteAtual, getUsuarioById, getLeilaoById, postLa
 import {  } from "../node_modules/socket.io/client-dist/socket.io.js"
 import {  } from "../node_modules/socket.io/client-dist/socket.io.js"
 
-const idLote = 11
+const idLote = 1
 
 const botaoLance = document.getElementById('btn-lance')
 const containerLance = document.getElementById('container-lance')
 const containerLanceClicado = document.getElementById('container-lance-clicado')
 
-const socket = io('http://localhost:8080')
-
+const socket = io('https://nolance-backend.onrender.com')
 
 socket.on('connect', () => {
     console.log('conectado')

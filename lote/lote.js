@@ -5,13 +5,14 @@ import {  } from "../node_modules/socket.io/client-dist/socket.io.js"
 import {  } from "../node_modules/socket.io/client-dist/socket.io.js"
 
 const idLote = localStorage.getItem('idLote')
+const idUsuario = localStorage.getItem('idUsuario')
 
 const botaoLance = document.getElementById('btn-lance')
 const containerLance = document.getElementById('container-lance')
 const containerLanceClicado = document.getElementById('container-lance-clicado')
 
-const socket = io('http://localhost:8080')
-// const socket = io('https://nolance-backend.onrender.com/v1/nolance')
+// const socket = io('http://localhost:8080')
+const socket = io('https://nolance.azurewebsites.net')
 
 socket.on('connect', () => {
     console.log('conectado')
@@ -34,7 +35,7 @@ const preencherInfoLote = async (lote) => {
     const status = document.getElementById('status')
     status.textContent = lote.status[0].nome
     
-    status.classList.add(`bg-[${lote.status[0].cor.replace(" ", "")}]`)
+    status.classList.add(`bg-[${lote.status[0].cor.replace("\t", "")}]`)
 
     let lanceAtual = await getArrematanteAtual(lote.id)
     const valorAtualClicado = document.getElementById('lance-atual-clicado')
@@ -100,7 +101,7 @@ const preencherInfoLote = async (lote) => {
 
     //preencher as imagens do lote
     const images = document.querySelectorAll('.image')
-    for (let i = 0; i < lote.imagens.length; i++) {
+    for (let i = 0; i < 3; i++) {
         images[i].style.backgroundImage = `url('${lote.imagens[i].url}')`
         images[i].addEventListener('click', () => {
             imgSelecionada.style.backgroundImage = `url('${lote.imagens[i].url}')`
@@ -133,7 +134,7 @@ const preencherInfoLote = async (lote) => {
                 "data_lance": date,
                 "valor": Number(inputValor.value),
                 "lote": lote.id,
-                "usuario": 1
+                "usuario": idUsuario
             }
         
             

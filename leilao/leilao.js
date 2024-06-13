@@ -1,11 +1,11 @@
 'use strict'
 
-import { getLeilaoById, getLotesLeilao } from '../api/endpoints.js'
+import { getCategoriaById, getLeilaoById, getLotesLeilao } from '../api/endpoints.js'
 
 // const idLeilao = localStorage.getItem('idleilao')
 const idLeilao = localStorage.getItem('idLeilao')
 const leilao = await getLeilaoById(idLeilao)
-
+const categoria = await getCategoriaById(leilao.categoria[0].id)
 
 const tituloLeilao  = document.getElementById('titulo')
 tituloLeilao.textContent = leilao.nome
@@ -71,11 +71,12 @@ const carregarLotes = async () =>{
 
         const lotes = await getLotesLeilao(idLeilao)
          quantidadeLotes.textContent = lotes.qntd_lotes + ' lotes'
-         pesquisarLotes(lotes.lotes)
+         
         lotes.lotes.forEach(lote =>{
                 let number = lotes.lotes.indexOf(lote) +1
                 criarCardLote(lote, number)
         })
+        pesquisarLotes(lotes.lotes)
 }
 
 carregarLotes()

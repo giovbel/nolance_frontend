@@ -1,17 +1,18 @@
 'use strict'
 
 const baseUrl = 'http://nolance.azurewebsites.net/v1/nolance'
-// const baseUrl = 'http://127.0.0.1:8080/v1/nolance'
+
 // usuários
 
 export const getUsuarioById = async (id) => {
 
     const url = `${baseUrl}/user/${id}`
+    console.log(url)
     
     const response = await fetch(url)
     const data = await response.json()
 
-    return data.usuario[0]
+    return data.usuarios
 }
 
 export const getLogarUsuario = async (email, senha) => {
@@ -22,6 +23,7 @@ export const getLogarUsuario = async (email, senha) => {
     const response = await fetch(url)
 
     const data = await response.json()
+    
 
     return data.usuario
 }
@@ -36,7 +38,7 @@ export async function postUsuario(usuario) {
         body: JSON.stringify(usuario)
     }
 
-    const response = await fetch(url, options)
+    const response = await fetch(url)
 
     return response.json()
 }
@@ -94,21 +96,21 @@ export async function postLance(lance) {
         },
         body: JSON.stringify(lance)
     }
-    const response = await fetch(url, options)
+    const response = await fetch(url)
 
     return response.ok
 }
 
 export const getArrematesUsuario = async (id) => {
 
-    const url = `${baseUrl}/arremate/usuario/` + id
+    const url = `${baseUrl}/lance/arremate/usuario/` + id
     const response = await fetch(url)
     const data = await response.json()
 
     if (data.status_code == 404) {
         return false
     } else {
-        return data.lances
+        return data.lance[0]
     }
 }
 
@@ -162,6 +164,15 @@ export const getCategorias = async () => {
     const data = await response.json()
        
     return data.categorias
+}
+export const getCategoriaById = async (id) => {
+
+
+    const url = `${baseUrl}/categoria/${id}`
+    const response = await fetch(url)
+    const data = await response.json()
+       
+    return data.categoria
 }
 
 export const updateCategoria = async (id, categoria) => {

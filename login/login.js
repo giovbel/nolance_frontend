@@ -65,7 +65,6 @@ btnSignUp.addEventListener('click', async () =>{
     let postNovoUsuario = await postUsuario(novoUsuario)
     console.log(postNovoUsuario)
     if(postNovoUsuario){
-        alert('conta criada com sucesso'+ postNovoUsuario.usuario[0].id)
         localStorage.setItem('idUsuario', postNovoUsuario.usuario[0].id)
     }
 

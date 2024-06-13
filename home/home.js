@@ -5,7 +5,7 @@ import { getListarLotes } from "../api/endpoints.js";
 
 const botoes = document.getElementById('sign-buttons')
 const botoesUsuario = document.getElementById('user-buttons')
-if(localStorage.getItem('idUsuario')!= 0){
+if(localStorage.getItem('idUsuario')!= 0 && localStorage.getItem('idUsuario') != null ){
         console.log(localStorage.getItem('idUsuario'))
         botoes.classList.add('hidden')
         botoesUsuario.classList.remove('hidden')
@@ -27,7 +27,7 @@ const criarCardLeilao = async (leilao) => {
         const imagem = document.createElement('img');
         imagem.src = leilao.foto_capa;
         imagem.alt = 'Imagem de capa do leilão';
-        imagem.classList.add('object-cover', 'h-[15vh]', 'w-[11vw]', 'rounded-md', 'bg-black');
+        imagem.classList.add('object-cover', 'h-[15vh]', 'w-[11vw]', 'rounded-md', 'bg-[../img/not_found.png]');
 
         const containerInfo = document.createElement('div');
         containerInfo.classList.add('grid', 'gap-5');
@@ -85,8 +85,6 @@ const criarCardLeilao = async (leilao) => {
 
         return container
 }
-
-
 await carregarLeiloes()
 
 //////////////////////////////LOTES////////////////////////////////////
@@ -98,9 +96,10 @@ async function carregarLotes() {
         lotes.forEach(lote => {
                 criarCardLote(lote)
         });
+        
 }
 
-const criarCardLote = (lote) => {
+const criarCardLote = (lote, number) => {
         const container = document.createElement('div');
         container.classList.add('h-[34.5vh]', 'w-[12.5vw]', 'border', 'border-black', 'rounded-md', 'pl-3', 'pt-2', 'grid');
 
@@ -141,7 +140,7 @@ const criarCardLote = (lote) => {
         horarioInfo.appendChild(horarioP);
 
         const statusContainer = document.createElement('div');
-        statusContainer.classList.add('h-9', 'w-[11vw]', 'rounded-sm', 'flex', 'items-center', 'justify-center', `bg-[${lote.status[0].cor.replace(' ', '')}]`);
+        statusContainer.classList.add('h-9', 'w-[11vw]', 'rounded-sm', 'flex', 'items-center', 'justify-center', `bg-[${lote.status[0].cor.replace('\t', '')}]`);
         const statusH1 = document.createElement('h1');
         statusH1.classList.add('text-white');
         statusH1.textContent = lote.status[0].nome;

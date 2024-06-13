@@ -10,8 +10,8 @@ const botaoLance = document.getElementById('btn-lance')
 const containerLance = document.getElementById('container-lance')
 const containerLanceClicado = document.getElementById('container-lance-clicado')
 
-const socket = io('http://localhost:8080')
-// const socket = io('https://nolance-backend.onrender.com/v1/nolance')
+// const socket = io('http://localhost:8080')
+const socket = io('https://nolance.azurewebsites.net/v1/nolance')
 
 socket.on('connect', () => {
     console.log('conectado')
@@ -34,7 +34,7 @@ const preencherInfoLote = async (lote) => {
     const status = document.getElementById('status')
     status.textContent = lote.status[0].nome
     
-    status.classList.add(`bg-[${lote.status[0].cor.replace(" ", "")}]`)
+    status.classList.add(`bg-[${lote.status[0].cor.replace("\t", "")}]`)
 
     let lanceAtual = await getArrematanteAtual(lote.id)
     const valorAtualClicado = document.getElementById('lance-atual-clicado')

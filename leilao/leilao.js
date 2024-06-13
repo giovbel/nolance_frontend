@@ -71,11 +71,12 @@ const carregarLotes = async () =>{
 
         const lotes = await getLotesLeilao(idLeilao)
          quantidadeLotes.textContent = lotes.qntd_lotes + ' lotes'
-         pesquisarLotes(lotes.lotes)
+         
         lotes.lotes.forEach(lote =>{
                 let number = lotes.lotes.indexOf(lote) +1
                 criarCardLote(lote, number)
         })
+        pesquisarLotes(lotes.lotes)
 }
 
 carregarLotes()

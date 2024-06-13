@@ -11,7 +11,7 @@ const containerLance = document.getElementById('container-lance')
 const containerLanceClicado = document.getElementById('container-lance-clicado')
 
 // const socket = io('http://localhost:8080')
-const socket = io('https://nolance.azurewebsites.net/v1/nolance')
+const socket = io('https://nolance.azurewebsites.net')
 
 socket.on('connect', () => {
     console.log('conectado')

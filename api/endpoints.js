@@ -1,8 +1,9 @@
 'use strict'
 
-const baseUrl = 'http://nolance.azurewebsites.net/v1/nolance'
-
+// const baseUrl = 'http://localhost:8080/v1/nolance'
+const baseUrl = 'https://nolance.azurewebsites.net/v1/nolance'
 // usuários
+
 
 export const getUsuarioById = async (id) => {
 
@@ -45,6 +46,7 @@ export async function postUsuario(usuario) {
 
 //interesses
 
+
 export const getInteressesByUser = async (id) => {
     const url = `${baseUrl}/interessesUsuario/${id}`
 
@@ -77,6 +79,7 @@ export const getArrematanteAtual = async (id) => {
     const url = `${baseUrl}/lance/arremate/lote/` + id
 
     const response = await fetch(url)
+
 
     const data = await response.json()
 
@@ -114,18 +117,17 @@ export const getArrematesUsuario = async (id) => {
     }
 }
 
-export const postInteresses = async (dados) => {
-    const url = `${baseUrl}/interesses`
-    const options = {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dados)
-    }
-    const response = await fetch(url, options)
-    return response.ok
+//arremates 
+export const criarSessaoPagamento = async (id) => {
+
+
+    const url = `https://nolance.azurewebsites.net/create-checkout-session/${id}`
+    const response = await fetch(url)
+    const data = await response.json()
+       
+    return data.categoria
 }
+
 
 
 //leiloes
@@ -187,3 +189,5 @@ export const updateCategoria = async (id, categoria) => {
 
     return response.ok
 }
+
+

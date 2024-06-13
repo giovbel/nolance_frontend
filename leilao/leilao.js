@@ -5,7 +5,8 @@ import { getCategoriaById, getLeilaoById, getLotesLeilao } from '../api/endpoint
 // const idLeilao = localStorage.getItem('idleilao')
 const idLeilao = localStorage.getItem('idLeilao')
 const leilao = await getLeilaoById(idLeilao)
-const categoria = await getCategoriaById(leilao.categoria[0].id)
+
+const categoria = await getCategoriaById(leilao.categoria_id[0].id)
 
 const tituloLeilao  = document.getElementById('titulo')
 tituloLeilao.textContent = leilao.nome

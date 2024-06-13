@@ -40,27 +40,7 @@ const btnSignUp = document.getElementById('botao-cadastrar')
 const btnLogin = document.getElementById('botao-logar')
 
 
-const logar = async () =>{
-
-    let email = document.getElementById('email')
-    let senha = document.getElementById('senha')
-    
-    const usuario = await getLogarUsuario(email.value, senha.value)
-
-
-    if(usuario){
-        localStorage.setItem('idUsuario', usuario[0].id)
-        window.location.assign('../home/home.html')
-        
-    }else{
-        alert('usuário ou senha incorretos')
-    }
-    
-}
-
-
-const cadastrar = async () =>{
-
+btnSignUp.addEventListener('click', async () =>{
     let email = document.getElementById('criar-email').value
     let senha = document.getElementById('criar-senha').value
     let nome = document.getElementById('criar-nome').value
@@ -89,8 +69,23 @@ const cadastrar = async () =>{
         localStorage.setItem('idUsuario', postNovoUsuario.usuario[0].id)
     }
 
-}
+})
 
-btnSignUp.addEventListener('click', cadastrar())
-btnLogin.addEventListener('click', logar())
+btnLogin.addEventListener('click', async () => {
+    
+    let email = document.getElementById('email')
+    let senha = document.getElementById('senha')
+    
+    const usuario = await getLogarUsuario(email.value, senha.value)
+
+
+    if(usuario){
+        localStorage.setItem('idUsuario', usuario[0].id)
+        window.location.assign('../home/home.html')
+        
+    }else{
+        alert('usuário ou senha incorretos')
+    }
+    
+})
 

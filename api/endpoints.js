@@ -1,9 +1,8 @@
 'use strict'
 
-const baseUrl = 'http://localhost:8080/v1/nolance'
-// const baseUrl = 'https://nolance-backend.onrender.com/v1/nolance'
+const baseUrl = 'http://nolance.azurewebsites.net/v1/nolance'
+// const baseUrl = 'http://127.0.0.1:8080/v1/nolance'
 // usuários
-
 
 export const getUsuarioById = async (id) => {
 
@@ -19,15 +18,9 @@ export const getLogarUsuario = async (email, senha) => {
 
 
     const url = `${baseUrl}/user?email=${email}&senha=${senha}`
-<<<<<<< HEAD
+
     const response = await fetch(url)
-=======
-<<<<<<< main
-    const response = await fetch(url)
-=======
-    const response = await fetch(url, optionsGet)
->>>>>>> main
->>>>>>> 76f54e99b9681c47c47c5e3096147628346f2d53
+
     const data = await response.json()
 
     return data.usuario
@@ -52,6 +45,7 @@ export async function postUsuario(usuario) {
 
 export const getInteressesByUser = async (id) => {
     const url = `${baseUrl}/interessesUsuario/${id}`
+
     const response = await fetch(url)
     const data = await response.json()
 
@@ -79,15 +73,9 @@ export const getListarLotes = async () => {
 export const getArrematanteAtual = async (id) => {
 
     const url = `${baseUrl}/lance/arremate/lote/` + id
-<<<<<<< HEAD
+
     const response = await fetch(url)
-=======
-<<<<<<< main
-    const response = await fetch(url)
-=======
-    const response = await fetch(url, optionsGet)
->>>>>>> main
->>>>>>> 76f54e99b9681c47c47c5e3096147628346f2d53
+
     const data = await response.json()
 
     if (data.status_code == 404) {
@@ -124,6 +112,19 @@ export const getArrematesUsuario = async (id) => {
     }
 }
 
+export const postInteresses = async (dados) => {
+    const url = `${baseUrl}/interesses`
+    const options = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dados)
+    }
+    const response = await fetch(url, options)
+    return response.ok
+}
+
 
 //leiloes
 export const getLeilaoById = async (id) => {
@@ -154,7 +155,6 @@ export const getLotesLeilao = async (id) => {
 
 //categorias
 export const getCategorias = async () => {
-<<<<<<< main
 
 
     const url = `${baseUrl}/categorias`
@@ -175,13 +175,4 @@ export const updateCategoria = async (id, categoria) => {
     })
 
     return response.ok
-=======
-
-
-    const url = `${baseUrl}/categorias`
-    const response = await fetch(url)
-    const data = await response.json()
-       
-    return data.categorias
->>>>>>> main
 }

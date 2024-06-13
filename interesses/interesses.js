@@ -1,13 +1,15 @@
 'use strict'
 
-import { getCategorias} from "../api/endpoints.js";
+import { getCategorias, postInteresses} from "../api/endpoints.js";
 
 async function carregarCategorias(){
+    
 
 const main = document.getElementById('main')
 
 
 const categorias = await getCategorias()
+console.log(categorias);
 const interesses = []
 
 categorias.forEach(interesse => {
@@ -62,16 +64,18 @@ divFinal.appendChild(linkContinuar);
 divFinal.appendChild(imgSeta);
 main.appendChild(divFinal);
 
-divFinal.addEventListener('click',  () =>{
+divFinal.addEventListener('click',  async () =>{
     if(interesses.length < 2)
         alert('Selecione pelo menos 2 interesses')
     else{
-        localStorage.setItem('interesses', JSON.stringify(interesses))
-<<<<<<< HEAD
+        let dados = {
+            categoria_id: interesses,
+            usuario_id: localStorage.getItem('idUsuario')
+        }
+        await postInteresses(dados)
+        
         window.location.href = '../home/home.html';
-=======
-        window.location.href = '../home.html';
->>>>>>> 76f54e99b9681c47c47c5e3096147628346f2d53
+
     }
     
 })

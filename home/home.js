@@ -1,6 +1,6 @@
 'use strict'
 
-import { getLeiloes } from "../api/endpoints.js";
+import { getLeiloes,getInteressesByUser } from "../api/endpoints.js";
 import { getListarLotes } from "../api/endpoints.js";
 
 const botoes = document.getElementById('sign-buttons')
@@ -13,6 +13,7 @@ if(localStorage.getItem('idUsuario')!= 0){
 
 async function carregarLeiloes() {
         const leiloes = await getLeiloes()
+        console.log(leiloes);
         const div = document.getElementById('div')
         leiloes.forEach(async leilao => {
                 let card = await criarCardLeilao(leilao)
@@ -89,6 +90,27 @@ const criarCardLeilao = async (leilao) => {
 
 await carregarLeiloes()
 
+const leiloesPorInteresse = async () =>{
+        let id = Number(localStorage.getItem('idUsuario'))
+
+        const interesses = await getInteressesByUser(id)
+        let div = document.getElementById('interests-div')
+       
+        for (let i = 0; i < interesses.length; i++) {
+                let interesse = interesses[i]
+                const leiloes = await getLeiloes()
+                for (let i = 0; i < leiloes.length; i++) {
+                        let leilao = leiloes[i]
+                        if(leilao.categoria[0].id == interesse.categoria[0].id){
+                                let card = await criarCardLeilao(leilao)
+                                div.appendChild(card)
+                        }
+                }
+        }
+}
+
+await leiloesPorInteresse()
+
 //////////////////////////////LOTES////////////////////////////////////
 
 async function carregarLotes() {
@@ -101,6 +123,7 @@ async function carregarLotes() {
 }
 
 const criarCardLote = (lote) => {
+
         const container = document.createElement('div');
         container.classList.add('h-[34.5vh]', 'w-[12.5vw]', 'border', 'border-black', 'rounded-md', 'pl-3', 'pt-2', 'grid');
 

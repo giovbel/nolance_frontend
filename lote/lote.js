@@ -1,6 +1,6 @@
 'use strict'
 
-import { getLoteById, getArrematanteAtual, getUsuarioById, getLeilaoById, postLance } from "../api/endpoints.js"
+import { getLoteById, getArrematanteAtual, getUsuarioById, getLeilaoById, postLance, criarSessaoPagamento } from "../api/endpoints.js"
 import {  } from "../node_modules/socket.io/client-dist/socket.io.js"
 import {  } from "../node_modules/socket.io/client-dist/socket.io.js"
 
@@ -10,6 +10,7 @@ const idUsuario = localStorage.getItem('idUsuario')
 const botaoLance = document.getElementById('btn-lance')
 const containerLance = document.getElementById('container-lance')
 const containerLanceClicado = document.getElementById('container-lance-clicado')
+
 
 // const socket = io('http://localhost:8080')
 const socket = io('https://nolance.azurewebsites.net')
@@ -22,6 +23,7 @@ socket.on('new-lance', (lance) => {
     console.log(lance)
     preencherInfoLote(lote[0])
 });
+
 
 const preencherInfoLote = async (lote) => {
 
@@ -37,7 +39,7 @@ const preencherInfoLote = async (lote) => {
     
     status.classList.add(`bg-[${lote.status[0].cor.replace("\t", "")}]`)
 
-    let lanceAtual = await getArrematanteAtual(lote.id)
+
     const valorAtualClicado = document.getElementById('lance-atual-clicado')
     const usuarioClicado = document.getElementById('usuario-clicado')
     const inputValor = document.getElementById('input-valor')
@@ -137,26 +139,27 @@ const preencherInfoLote = async (lote) => {
                 "usuario": idUsuario
             }
         
+        
             
         socket.emit('enviar-lance', lanceJSON)
         await postLance(lanceJSON)
         containerLance.classList.remove('hidden')
-        containerLanceClicado.classList.add('hidden')
-
-
-
-
-        // socket.on('new-lance', (lance) => {
-        //     console.log(lance)
-        //     // 
-        // });
         
     })
 
+    // //um lance finalizado 
+    // console.log(leilaoFinalizado, lanceAtual.usuario_id, idUsuario)
+    // if(leilaoFinalizado && lanceAtual.usuario_id == Number(idUsuario)){
+    //     criarBotaoPagamento()
+    // }
+
 }
 
+
 const lote = await getLoteById(idLote)
-preencherInfoLote(lote[0])
+let lanceAtual = await getArrematanteAtual(lote[0].id)
+let leilaoFinalizado = false
+const botaoPagamento = document.getElementById('btn-pagamento')
 const updateCountdown = async () => {
     let leilao = await getLeilaoById(lote[0].leilao)
     const dataAtual = new Date()
@@ -171,6 +174,13 @@ const updateCountdown = async () => {
         tempo.classList.add('text-red-500', 'border-red-500')
         botaoLance.classList.add('hidden')
         lanceFinal.classList.remove('hidden')
+        leilaoFinalizado = true
+
+        // console.log(botaoPagamento)
+        if(lanceAtual.usuario_id == idUsuario)
+        if(botaoPagamento.classList.contains('hidden'))
+        botaoPagamento.classList.remove('hidden')
+    
     }else{
         if(tempoRestante.seconds == 10)
             tempo.classList.add('border-red-500')
@@ -182,6 +192,22 @@ const updateCountdown = async () => {
     }
 }
 setInterval(updateCountdown, 1000);
+
+preencherInfoLote(lote[0])
+
+const criarBotaoPagamento = async () =>{
+    const botaoPagamento = document.createElement('button')
+    botaoPagamento.classList.add('bg-verde_escuro', 'text-4xl', 'py-4', 'px-12', 'w-full', 'text-center')
+    botaoPagamento.textContent = 'Realizar pagamento'
+    containerLance.appendChild(botaoPagamento)
+
+
+}
+
+botaoPagamento.addEventListener('click', async () =>{
+    let pagamento = await criarSessaoPagamento(lote[0].id)
+     console.log(pagamento)
+ })
 
 function saveLeilaoId(){
     localStorage.setItem('idLeilao', lote[0].leilao)

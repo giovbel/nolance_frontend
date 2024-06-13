@@ -18,29 +18,29 @@ const preencherInfoUsuario = async (usuario) =>{
 
 }
 
-const criarCardHistorico = async (leilao) =>{
+const criarCardHistorico = async (lote) =>{
 
     const card = document.createElement('div')
     card.classList.add('h-40', 'w-[14vw]', 'border', 'border-black',  'pt-3', 'pb-5', 'rounded-md', 'pl-5')
     const header = document.createElement('div')
     const imagem = document.createElement('div')
     imagem.classList.add('h-10', 'w-10', 'bg-black', 'bg-cover', 'bg-center')
-    const data = docume.createElement('h2')
+    const data = document.createElement('h2')
     data.classList.add('text-xl')
-    data.textContent = leilao.data_lance
+    data.textContent = lote.data_lance.split('T')[0].split('-').reverse().join('/')
     header.replaceChildren(imagem, data)
 
     const info = document.createElement('div')
     info.classList.add('pt-2')
     const nome = document.createElement('span')
     nome.classList.add('text-lg')
-    nome.textContent = 'Leilao'
+    nome.textContent = 'lote'
     const arremate = document.createElement('span')
     arremate.classList.add('text-lg')
-    arremate.textContent = 'Arrematante por'
+    arremate.textContent = 'Arrematante por '
     const valor = document.createElement('span')
     valor.classList.add('text-lg')
-    valor.textContent = `R$${leilao.valor}`
+    valor.textContent = `R$${lote.valor.toFixed(2)}`
     info.replaceChildren(nome, arremate, valor)
 
     card.replaceChildren(header, info)
@@ -52,7 +52,9 @@ const criarCardHistorico = async (leilao) =>{
 
 const carregarHistorico = async () =>{
     const lotes = await getArrematesUsuario(idUsuario)
+    
     lotes.forEach(lote  =>{
+
         criarCardHistorico(lote)
     })
 }

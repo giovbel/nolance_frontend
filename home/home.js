@@ -28,6 +28,10 @@ const criarCardLeilao = async (leilao) => {
         imagem.src = leilao.foto_capa;
         imagem.alt = 'Imagem de capa do leilão';
         imagem.classList.add('object-cover', 'h-[15vh]', 'w-[11vw]', 'rounded-md', 'bg-[../img/not_found.png]');
+        imagem.addEventListener("error", function(event) {
+                event.target.src = "../img/not_found.png"
+                event.onerror = null
+              })
 
         const containerInfo = document.createElement('div');
         containerInfo.classList.add('grid', 'gap-5');
@@ -107,7 +111,7 @@ const criarCardLote = (lote, number) => {
         h1.textContent = lote.id;
 
         const imagem = document.createElement('div');
-        imagem.src = '../img/not_found.png';
+        imagem.style.backgroundImage = "url('../img/not_found.png')";
         imagem.classList.add('h-[12vh]', 'w-[11vw]', 'bg-cover', 'bg-center');
 
 

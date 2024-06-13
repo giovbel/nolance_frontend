@@ -5,6 +5,7 @@ import {  } from "../node_modules/socket.io/client-dist/socket.io.js"
 import {  } from "../node_modules/socket.io/client-dist/socket.io.js"
 
 const idLote = localStorage.getItem('idLote')
+const idUsuario = localStorage.getItem('idUsuario')
 
 const botaoLance = document.getElementById('btn-lance')
 const containerLance = document.getElementById('container-lance')
@@ -100,7 +101,7 @@ const preencherInfoLote = async (lote) => {
 
     //preencher as imagens do lote
     const images = document.querySelectorAll('.image')
-    for (let i = 0; i < lote.imagens.length; i++) {
+    for (let i = 0; i < 3; i++) {
         images[i].style.backgroundImage = `url('${lote.imagens[i].url}')`
         images[i].addEventListener('click', () => {
             imgSelecionada.style.backgroundImage = `url('${lote.imagens[i].url}')`
@@ -133,7 +134,7 @@ const preencherInfoLote = async (lote) => {
                 "data_lance": date,
                 "valor": Number(inputValor.value),
                 "lote": lote.id,
-                "usuario": 1
+                "usuario": idUsuario
             }
         
             

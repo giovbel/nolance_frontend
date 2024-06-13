@@ -1,7 +1,7 @@
 'use strict'
 
-import { getLeiloes,getInteressesByUser } from "../api/endpoints.js";
-import { getListarLotes } from "../api/endpoints.js";
+import { getLeiloes } from "../api/endpoints.js";
+import { getListarLotes, getInteressesByUser } from "../api/endpoints.js";
 
 const botoes = document.getElementById('sign-buttons')
 const botoesUsuario = document.getElementById('user-buttons')
@@ -13,7 +13,6 @@ if(localStorage.getItem('idUsuario')!= 0 && localStorage.getItem('idUsuario') !=
 
 async function carregarLeiloes() {
         const leiloes = await getLeiloes()
-        console.log(leiloes);
         const div = document.getElementById('div')
         leiloes.forEach(async leilao => {
                 let card = await criarCardLeilao(leilao)
@@ -92,6 +91,8 @@ const criarCardLeilao = async (leilao) => {
 }
 await carregarLeiloes()
 
+//////////////////////////////////// INTERESSES ///////////////////////////////////
+
 const leiloesPorInteresse = async () =>{
         let id = Number(localStorage.getItem('idUsuario'))
 
@@ -113,6 +114,7 @@ const leiloesPorInteresse = async () =>{
 
 await leiloesPorInteresse()
 
+
 //////////////////////////////LOTES////////////////////////////////////
 
 async function carregarLotes() {
@@ -125,8 +127,7 @@ async function carregarLotes() {
         
 }
 
-const criarCardLote = (lote) => {
-
+const criarCardLote = (lote, number) => {
         const container = document.createElement('div');
         container.classList.add('h-[34.5vh]', 'w-[12.5vw]', 'border', 'border-black', 'rounded-md', 'pl-3', 'pt-2', 'grid');
 
@@ -181,7 +182,7 @@ const criarCardLote = (lote) => {
         container.appendChild(infoContainer);
         container.appendChild(statusContainer);
 
-        const div = document.getElementById('interesses')
+        const div = document.getElementById('acabando')
         div.appendChild(container)
         div.addEventListener('click', () =>{
                 localStorage.setItem('idLote', lote.id)
@@ -194,14 +195,14 @@ await carregarLotes()
 
 //////////////////////////////////////////////////////////////////
 
-async function carregarLeiloesAcabando() {
+// async function carregarLeiloesAcabando() {
 
-        const leiloes = await getLeiloes()
-        const acabando = document.getElementById('acabando')
-        leiloes.forEach(async leilao => {
-                let card = await criarCardLeilao(leilao)
+//         const leiloes = await getLeiloes()
+//         const acabando = document.getElementById('acabando')
+//         leiloes.forEach(async leilao => {
+//                 let card = await criarCardLeilao(leilao)
 
-                acabando.appendChild(card)
-        });
-}
-await carregarLeiloesAcabando()
+//                 acabando.appendChild(card)
+//         });
+// }
+// await carregarLeiloesAcabando()

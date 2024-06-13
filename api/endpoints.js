@@ -1,7 +1,7 @@
 'use strict'
 
-const baseUrl = 'http://localhost:8080/v1/nolance'
-// const baseUrl = 'https://nolance-backend.onrender.com/v1/nolance'
+// const baseUrl = 'http://localhost:8080/v1/nolance'
+const baseUrl = 'https://nolance.azurewebsites.net/v1/nolance'
 // usuários
 
 
@@ -19,15 +19,9 @@ export const getLogarUsuario = async (email, senha) => {
 
 
     const url = `${baseUrl}/user?email=${email}&senha=${senha}`
-<<<<<<< HEAD
+
     const response = await fetch(url)
-=======
-<<<<<<< main
-    const response = await fetch(url)
-=======
-    const response = await fetch(url, optionsGet)
->>>>>>> main
->>>>>>> 76f54e99b9681c47c47c5e3096147628346f2d53
+
     const data = await response.json()
 
     return data.usuario
@@ -79,15 +73,10 @@ export const getListarLotes = async () => {
 export const getArrematanteAtual = async (id) => {
 
     const url = `${baseUrl}/lance/arremate/lote/` + id
-<<<<<<< HEAD
+
     const response = await fetch(url)
-=======
-<<<<<<< main
-    const response = await fetch(url)
-=======
-    const response = await fetch(url, optionsGet)
->>>>>>> main
->>>>>>> 76f54e99b9681c47c47c5e3096147628346f2d53
+
+
     const data = await response.json()
 
     if (data.status_code == 404) {
@@ -154,7 +143,6 @@ export const getLotesLeilao = async (id) => {
 
 //categorias
 export const getCategorias = async () => {
-<<<<<<< main
 
 
     const url = `${baseUrl}/categorias`
@@ -175,13 +163,4 @@ export const updateCategoria = async (id, categoria) => {
     })
 
     return response.ok
-=======
-
-
-    const url = `${baseUrl}/categorias`
-    const response = await fetch(url)
-    const data = await response.json()
-       
-    return data.categorias
->>>>>>> main
 }
